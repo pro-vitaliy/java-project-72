@@ -5,7 +5,8 @@ import io.javalin.rendering.template.JavalinJte;
 
 public class App {
     public static void main(String[] args) {
-        getApp().start(7070);
+        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "7070"));
+        getApp().start(port);
     }
 
     public static Javalin getApp() {
