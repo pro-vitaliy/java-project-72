@@ -22,6 +22,12 @@ repositories {
 }
 
 dependencies {
+    implementation("io.javalin:javalin:6.3.0")
+    implementation("io.javalin:javalin-bundle:6.3.0")
+    implementation("io.javalin:javalin-rendering:6.3.0")
+    implementation("org.slf4j:slf4j-simple:2.0.16")
+    implementation("gg.jte:jte:3.1.13")
+
     testImplementation("org.assertj:assertj-core:3.26.3")
     testImplementation(platform("org.junit:junit-bom:5.11.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
