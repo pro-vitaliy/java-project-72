@@ -22,6 +22,9 @@ repositories {
 }
 
 dependencies {
+    implementation("org.postgresql:postgresql:42.7.4")
+    implementation("com.h2database:h2:2.3.232")
+    implementation("com.zaxxer:HikariCP:6.0.0")
     implementation("io.javalin:javalin:6.3.0")
     implementation("io.javalin:javalin-bundle:6.3.0")
     implementation("io.javalin:javalin-rendering:6.3.0")
