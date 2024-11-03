@@ -23,7 +23,7 @@ public class App {
         if (dbUrlTemplate != null) {
             dbUrl = dbUrlTemplate
                     .replace("${HOST}", System.getenv("HOST"))
-                    .replace("${DB_PORT", System.getenv("DB_PORT"))
+                    .replace("${DB_PORT}", System.getenv("DB_PORT"))
                     .replace("${DATABASE}", System.getenv("DATABASE"))
                     .replace("${PASSWORD}", System.getenv("PASSWORD"))
                     .replace("${USERNAME}", System.getenv("USERNAME"));
