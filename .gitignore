@@ -13,3 +13,5 @@ bin
 .idea/
 .factorypath
 *.iml
+.jteroot
+app/jte-classes/
