@@ -21,17 +21,16 @@ public class App {
 
     public static void initializeDataSource() throws Exception {
         var hikariConfig = new HikariConfig();
-        var dbUrlLocal = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
-        var dbUrl = System.getenv().getOrDefault("JDBC_DATABASE_URL", dbUrlLocal);
-        System.out.println(dbUrl + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-//        if (dbUrlTemplate != null) {
-//            dbUrl = dbUrlTemplate
-//                    .replace("${HOST}", System.getenv("HOST"))
-//                    .replace("${DB_PORT}", System.getenv("DB_PORT"))
-//                    .replace("${DATABASE}", System.getenv("DATABASE"))
-//                    .replace("${PASSWORD}", System.getenv("PASSWORD"))
-//                    .replace("${USERNAME}", System.getenv("USERNAME"));
-//        }
+        var dbUrl = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
+        var dbUrlTemplate = System.getenv("JDBC_DATABASE_URL");
+        if (dbUrlTemplate != null) {
+            dbUrl = dbUrlTemplate
+                    .replace("${HOST}", System.getenv("HOST"))
+                    .replace("${DB_PORT}", System.getenv("DB_PORT"))
+                    .replace("${DATABASE}", System.getenv("DATABASE"))
+                    .replace("${PASSWORD}", System.getenv("PASSWORD"))
+                    .replace("${USERNAME}", System.getenv("USERNAME"));
+        }
 
         hikariConfig.setJdbcUrl(dbUrl);
 
