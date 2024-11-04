@@ -58,7 +58,7 @@ public class App {
         return app;
     }
 
-    private static TemplateEngine createTemplateEngine(){
+    private static TemplateEngine createTemplateEngine() {
         ClassLoader classLoader = App.class.getClassLoader();
         ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
         return TemplateEngine.create(codeResolver, ContentType.Html);
