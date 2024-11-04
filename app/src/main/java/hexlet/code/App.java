@@ -23,6 +23,7 @@ public class App {
         var hikariConfig = new HikariConfig();
         var dbUrlLocal = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
         var dbUrl = System.getenv().getOrDefault("JDBC_DATABASE_URL", dbUrlLocal);
+        System.out.println(dbUrl + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 //        if (dbUrlTemplate != null) {
 //            dbUrl = dbUrlTemplate
 //                    .replace("${HOST}", System.getenv("HOST"))
