@@ -8,8 +8,20 @@
           rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous">
+    <style>
+      body {
+        background-color: #212529;
+        color: #dee2e6;
+      }
+    </style>
   </head>
   <body>
-    <h1 class="display-5">Hello world</h1>
+    <form action="/urls" method="post">
+      <div class="mb-3">
+        <label class="form-label">Enter url</label>
+        <input type="url" name="url" class="form-control">
+      </div>
+      <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
   </body>
 </html>
