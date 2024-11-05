@@ -22,14 +22,16 @@ public class App {
     public static void initializeDataSource() throws Exception {
         var hikariConfig = new HikariConfig();
         var dbUrl = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
+//        jdbc:postgresql://USERNAME:PASSWORD@HOST:DB_PORT/DATABASE
+//        postgresql://hexlet_homework_javalin_user:Az4wdBQuP9f5yIdYltGmQYDUAQl3URXH@dpg-csh5jpg8fa8c73f6g6c0-a/hexlet_homework_javalin
         var dbUrlTemplate = System.getenv("JDBC_DATABASE_URL");
         if (dbUrlTemplate != null) {
             dbUrl = dbUrlTemplate
-                    .replace("${HOST}", System.getenv("HOST"))
-                    .replace("${DB_PORT}", System.getenv("DB_PORT"))
-                    .replace("${DATABASE}", System.getenv("DATABASE"))
-                    .replace("${PASSWORD}", System.getenv("PASSWORD"))
-                    .replace("${USERNAME}", System.getenv("USERNAME"));
+                    .replace("HOST", System.getenv("HOST"))
+                    .replace("DB_PORT", System.getenv("DB_PORT"))
+                    .replace("DATABASE", System.getenv("DATABASE"))
+                    .replace("PASSWORD", System.getenv("PASSWORD"))
+                    .replace("USERNAME", System.getenv("USERNAME"));
         }
 
         hikariConfig.setJdbcUrl(dbUrl);
