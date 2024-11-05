@@ -22,8 +22,6 @@ public class App {
     public static void initializeDataSource() throws Exception {
         var hikariConfig = new HikariConfig();
         var dbUrl = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
-//        jdbc:postgresql://USERNAME:PASSWORD@HOST:DB_PORT/DATABASE
-//        postgresql://hexlet_homework_javalin_user:Az4wdBQuP9f5yIdYltGmQYDUAQl3URXH@dpg-csh5jpg8fa8c73f6g6c0-a/hexlet_homework_javalin
         var dbUrlTemplate = System.getenv("JDBC_DATABASE_URL");
         if (dbUrlTemplate != null) {
             dbUrl = dbUrlTemplate
