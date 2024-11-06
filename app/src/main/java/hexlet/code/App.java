@@ -11,6 +11,7 @@ import io.javalin.rendering.template.JavalinJte;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.stream.Collectors;
 
 public class App {
@@ -21,16 +22,18 @@ public class App {
 
     public static void initializeDataSource() throws Exception {
         var hikariConfig = new HikariConfig();
-        var dbUrl = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
-        var dbUrlTemplate = System.getenv("JDBC_DATABASE_URL");
-        if (dbUrlTemplate != null) {
-            dbUrl = dbUrlTemplate
-                    .replace("HOST", System.getenv("HOST"))
-                    .replace("DB_PORT", System.getenv("DB_PORT"))
-                    .replace("DATABASE", System.getenv("DATABASE"))
-                    .replace("PASSWORD", System.getenv("PASSWORD"))
-                    .replace("USERNAME", System.getenv("USERNAME"));
-        }
+        var defaultJdbcUrl = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
+        var dbUrl = System.getenv().getOrDefault("JDBC_DATABASE_URL", defaultJdbcUrl);
+//        var dbUrl = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
+//        var dbUrlTemplate = System.getenv("JDBC_DATABASE_URL");
+//        if (dbUrlTemplate != null) {
+//            dbUrl = dbUrlTemplate
+//                    .replace("HOST", System.getenv("HOST"))
+//                    .replace("DB_PORT", System.getenv("DB_PORT"))
+//                    .replace("DATABASE", System.getenv("DATABASE"))
+//                    .replace("PASSWORD", System.getenv("PASSWORD"))
+//                    .replace("USERNAME", System.getenv("USERNAME"));
+//        }
 
         hikariConfig.setJdbcUrl(dbUrl);
 
@@ -54,6 +57,11 @@ public class App {
         });
 
         app.get("/", ctx -> ctx.render("index.jte"));
+
+        app.post("/urls", ctx -> {
+            var formParam = ctx.formParamAsClass("url", URL.class).get();
+            var url = formParam.toURI();
+        });
 
         return app;
     }
