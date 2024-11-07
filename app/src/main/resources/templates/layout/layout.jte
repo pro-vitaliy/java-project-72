@@ -1,4 +1,6 @@
 @import gg.jte.Content
+@import hexlet.code.dto.BasePage
+@param BasePage basePage = null
 @param Content content
 
 
@@ -20,6 +22,11 @@
     </style>
   </head>
   <body>
+    <div>
+      @if(basePage != null && basePage.getFlash() != null)
+        <p>${basePage.getFlash()}</p>
+      @endif
+    </div>
     ${content}
   </body>
 </html>
