@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UrlRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
@@ -45,6 +46,7 @@ public class UrlRepository extends BaseRepository {
             return result;
         }
     }
+
     public static Optional<Url> find(Long id) throws SQLException {
         var sql = "SELECT * FROM urls WHERE id = ?";
         try (var connection = dataSource.getConnection();
@@ -60,6 +62,16 @@ public class UrlRepository extends BaseRepository {
                 return Optional.of(url);
             }
             return Optional.empty();
+        }
+    }
+
+    public static boolean urlContains(String name) throws SQLException {
+        var sql = "SELECT 1 FROM urls WHERE name = ? LIMIT 1";
+        try (var connection = dataSource.getConnection();
+                var statement = connection.prepareStatement(sql)) {
+            statement.setString(1, name);
+            var resultSet = statement.executeQuery();
+            return resultSet.next();
         }
     }
 }
