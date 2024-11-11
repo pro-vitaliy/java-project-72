@@ -5,6 +5,7 @@ import hexlet.code.dto.urls.UrlPage;
 import hexlet.code.dto.urls.UrlsPage;
 import hexlet.code.model.Url;
 import hexlet.code.repository.UrlRepository;
+import hexlet.code.util.NamedRoutes;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
 
@@ -32,12 +33,12 @@ public class UrlsController {
             }
             if (UrlRepository.urlContains(parsedUrl)) {
                 ctx.sessionAttribute("flash", "Страница уже существует");
-                ctx.redirect("/urls");
+                ctx.redirect(NamedRoutes.urlsPath());
             } else {
                 var url = new Url(parsedUrl);
                 UrlRepository.save(url);
                 ctx.sessionAttribute("flash", "Страница успешно добавлена");
-                ctx.redirect("/urls");
+                ctx.redirect(NamedRoutes.urlsPath());
             }
         } catch (URISyntaxException | MalformedURLException | IllegalArgumentException e) {
             ctx.sessionAttribute("flash", "Некорректный URL");
