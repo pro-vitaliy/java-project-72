@@ -22,6 +22,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jsoup:jsoup:1.18.1")
     implementation("org.postgresql:postgresql:42.7.4")
     implementation("com.h2database:h2:2.3.232")
     implementation("com.zaxxer:HikariCP:6.0.0")
