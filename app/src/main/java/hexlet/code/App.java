@@ -52,6 +52,7 @@ public class App {
         app.get(NamedRoutes.urlPath("{id}"), UrlsController::show);
 
         app.post(NamedRoutes.urlsPath(), UrlsController::create);
+        app.post(NamedRoutes.urlCheckPath("{id}"), UrlsController::check);
 
         return app;
     }
@@ -61,5 +62,4 @@ public class App {
         ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
         return TemplateEngine.create(codeResolver, ContentType.Html);
     }
-
 }
