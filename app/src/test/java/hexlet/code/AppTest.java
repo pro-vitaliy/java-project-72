@@ -47,6 +47,7 @@ public class AppTest {
         JavalinTest.test(app, (server, client) -> {
             var response = client.get(NamedRoutes.rootPath());
             assertThat(response.code()).isEqualTo(200);
+            assertThat(response.body()).isNotNull();
             var responseBody = response.body().string();
             assertThat(responseBody).contains("<form");
             assertThat(responseBody).contains("name=\"url\"");
@@ -57,9 +58,11 @@ public class AppTest {
     public void testAddUrl() {
         JavalinTest.test(app, (server, client) -> {
             var requestBody = "url=https://test.io";
-            var response = client.post(NamedRoutes.urlsPath(), requestBody);
-            assertThat(response.code()).isEqualTo(200);
-            assertThat(response.body().string()).contains("https://test.io");
+            try (var response = client.post(NamedRoutes.urlsPath(), requestBody)) {
+                assertThat(response.code()).isEqualTo(200);
+                assertThat(response.body()).isNotNull();
+                assertThat(response.body().string()).contains("https://test.io");
+            }
         });
     }
 
@@ -94,12 +97,14 @@ public class AppTest {
         var url = new Url(mockServer.url("/").toString());
         UrlRepository.save(url);
         JavalinTest.test(app, (server, client) -> {
-            var response = client.post(NamedRoutes.urlCheckPath(url.getId()));
-            assertThat(response.code()).isEqualTo(200);
-            var responseBody = response.body().string();
-            assertThat(responseBody).contains("Test description");
-            assertThat(responseBody).contains("Test title");
-            assertThat(responseBody).contains("Test h1");
+            try (var response = client.post(NamedRoutes.urlCheckPath(url.getId()))) {
+                assertThat(response.code()).isEqualTo(200);
+                assertThat(response.body()).isNotNull();
+                var responseBody = response.body().string();
+                assertThat(responseBody).contains("Test description");
+                assertThat(responseBody).contains("Test title");
+                assertThat(responseBody).contains("Test h1");
+            }
         });
     }
 
