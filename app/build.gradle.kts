@@ -32,6 +32,7 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.16")
     implementation("gg.jte:jte:3.1.13")
 
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
     testImplementation("org.assertj:assertj-core:3.26.3")
     testImplementation(platform("org.junit:junit-bom:5.11.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
