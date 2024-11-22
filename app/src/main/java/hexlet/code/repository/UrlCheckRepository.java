@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UrlCheckRepository extends BaseRepository {
     public static void save(UrlCheck check) throws SQLException {
@@ -55,6 +56,28 @@ public class UrlCheckRepository extends BaseRepository {
                 result.add(urlCheck);
             }
             return result;
+        }
+    }
+
+    public static Optional<UrlCheck> findLastCheck(Long urlId) throws SQLException {
+        var sql = "SELECT * FROM urls_check WHERE url_id = ? ORDER BY created_at DESC LIMIT 1";
+
+        try (var connection = dataSource.getConnection();
+                var statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, urlId);
+            var resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                var lastCheck = new UrlCheck(urlId);
+                lastCheck.setId(resultSet.getLong("id"));
+                lastCheck.setStatusCode(resultSet.getInt("status_code"));
+                lastCheck.setTitle(resultSet.getString("title"));
+                lastCheck.setH1(resultSet.getString("h1"));
+                lastCheck.setDescription(resultSet.getString("description"));
+                lastCheck.setCreatedAt(resultSet.getTimestamp("created_at"));
+                return Optional.of(lastCheck);
+            } else {
+                return Optional.empty();
+            }
         }
     }
 }
