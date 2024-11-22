@@ -1,6 +1,8 @@
 package hexlet.code.model;
 
 import java.sql.Timestamp;
+
+import hexlet.code.util.TimestampFormatter;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,5 +15,9 @@ public class Url {
 
     public Url(String name) {
         this.name = name;
+    }
+
+    public String getFormattedCreatedAt() {
+        return TimestampFormatter.format(createdAt);
     }
 }
