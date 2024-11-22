@@ -14,15 +14,16 @@ import io.javalin.rendering.template.JavalinJte;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws SQLException, FileNotFoundException {
         int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "7070"));
         getApp().start(port);
     }
 
-    public static void initializeDataSource() throws Exception {
+    public static void initializeDataSource() throws SQLException, FileNotFoundException {
         var hikariConfig = new HikariConfig();
         var defaultJdbcUrl = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
         var dbUrl = System.getenv().getOrDefault("JDBC_DATABASE_URL", defaultJdbcUrl);
@@ -43,7 +44,7 @@ public class App {
         BaseRepository.dataSource = dataSource;
     }
 
-    public static Javalin getApp() throws Exception {
+    public static Javalin getApp() throws SQLException, FileNotFoundException {
         initializeDataSource();
 
         var app = Javalin.create(config -> {

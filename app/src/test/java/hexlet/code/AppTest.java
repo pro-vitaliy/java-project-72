@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -38,7 +39,7 @@ public class AppTest {
     }
 
     @BeforeEach
-    public final void setApp() throws Exception {
+    public final void setApp() throws SQLException, FileNotFoundException {
         app = App.getApp();
     }
 
