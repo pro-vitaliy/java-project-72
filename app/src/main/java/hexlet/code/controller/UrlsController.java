@@ -40,17 +40,20 @@ public class UrlsController {
             }
             if (UrlRepository.urlContains(parsedUrl)) {
                 ctx.sessionAttribute("flash", "Страница уже существует");
+                ctx.sessionAttribute("flashType", "info");
                 ctx.redirect(NamedRoutes.urlsPath());
             } else {
                 var url = new Url(parsedUrl);
                 UrlRepository.save(url);
                 ctx.sessionAttribute("flash", "Страница успешно добавлена");
+                ctx.sessionAttribute("flashType", "success");
                 ctx.redirect(NamedRoutes.urlsPath());
             }
         } catch (URISyntaxException | MalformedURLException | IllegalArgumentException e) {
             ctx.sessionAttribute("flash", "Некорректный URL");
             var page = new BasePage();
             page.setFlash(ctx.consumeSessionAttribute("flash"));
+            page.setFlashType("error");
             ctx.render("index.jte", model("page", page)).status(302);
         }
     }
@@ -65,6 +68,7 @@ public class UrlsController {
         }
         var page = new UrlsPage(urlsInfo);
         page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlashType(ctx.consumeSessionAttribute("flashType"));
         ctx.render("urls/index.jte", model("page", page));
     }
 
@@ -75,6 +79,7 @@ public class UrlsController {
         var urlCheck = UrlCheckRepository.findByUrlId(id);
         var page = new UrlPage(url, urlCheck);
         page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlashType(ctx.consumeSessionAttribute("flashType"));
         ctx.render("urls/show.jte", model("page", page));
     }
 
@@ -100,8 +105,10 @@ public class UrlsController {
             urlCheck.setDescription(description);
             UrlCheckRepository.save(urlCheck);
             ctx.sessionAttribute("flash", "Проверка успешно добавлена");
+            ctx.sessionAttribute("flashType", "success");
         } catch (UnknownHostException e) {
             ctx.sessionAttribute("flash", "Некорректный адрес");
+            ctx.sessionAttribute("flashType", "error");
         }
 
         ctx.redirect(NamedRoutes.urlPath(id));
