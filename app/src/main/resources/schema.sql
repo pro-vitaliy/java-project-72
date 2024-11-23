@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS urls_check;
+DROP TABLE IF EXISTS url_checks;
 DROP TABLE IF EXISTS urls;
 
 CREATE TABLE urls (
@@ -7,7 +7,7 @@ CREATE TABLE urls (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE urls_check (
+CREATE TABLE url_checks (
     id SERIAL PRIMARY KEY,
     url_id INTEGER REFERENCES urls(id) NOT NULL,
     status_code INT,

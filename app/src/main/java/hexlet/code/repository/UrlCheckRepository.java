@@ -13,7 +13,7 @@ import java.util.Optional;
 public class UrlCheckRepository extends BaseRepository {
     public static void save(UrlCheck check) throws SQLException {
         var sql = """
-                INSERT INTO urls_check
+                INSERT INTO url_checks
                 (url_id, status_code, h1, title, description, created_at)
                 VALUES (?, ?, ?, ?, ?, ?);
                 """;
@@ -38,7 +38,7 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static List<UrlCheck> findByUrlId(Long urlId) throws SQLException {
-        var sql = "SELECT * FROM urls_check WHERE url_id = ?";
+        var sql = "SELECT * FROM url_checks WHERE url_id = ?";
 
         try (var connection = dataSource.getConnection();
                 var statement = connection.prepareStatement(sql)) {
@@ -60,7 +60,7 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static Optional<UrlCheck> findLastCheck(Long urlId) throws SQLException {
-        var sql = "SELECT * FROM urls_check WHERE url_id = ? ORDER BY created_at DESC LIMIT 1";
+        var sql = "SELECT * FROM url_checks WHERE url_id = ? ORDER BY created_at DESC LIMIT 1";
 
         try (var connection = dataSource.getConnection();
                 var statement = connection.prepareStatement(sql)) {
