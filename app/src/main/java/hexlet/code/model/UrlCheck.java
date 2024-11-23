@@ -21,6 +21,13 @@ public class UrlCheck {
         this.urlId = urlId;
     }
 
+    /**
+     * Formats the creation at timestamp
+     * <p>
+     *     Subclasses may override this method to provide a custom formatting logic.
+     * </p>
+     * @return formatted creation timestamp as a String
+     */
     public String getFormattedCreatedAt() {
         return TimestampFormatter.format(createdAt);
     }
