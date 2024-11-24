@@ -3,31 +3,31 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/9e54b6de0d9a8a6e8caa/maintainability)](https://codeclimate.com/github/pro-vitaliy/java-project-72/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/9e54b6de0d9a8a6e8caa/test_coverage)](https://codeclimate.com/github/pro-vitaliy/java-project-72/test_coverage)
 
-### Анализатор страниц
+## Анализатор страниц
 Учебный проект представляющий собой веб-сайт на базе фреймворка Javalin.
 Анализатор страниц проверяет указанные URL адреса на SEO пригодность.
 
-# Start server
+### Start server
 ```bash
 make start
 ```
 
-# Clean
+### Clean
 ```bash
 make clean
 ```
 
-# Run tests
+### Run tests
 ```bash
 make test
 ```
 
-# Run checkstyle
+### Run checkstyle
 ```bash
 make lint
 ```
 
-# Check update dependencies and plugins
+### Check update dependencies and plugins
 ```bash
 make check-deps
 ```
