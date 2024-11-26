@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Setter
 public class UrlCheck {
     private Long id;
-    private Integer statusCode;
+    private int statusCode;
     private String title;
     private String h1;
     private String description;

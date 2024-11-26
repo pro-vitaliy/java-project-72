@@ -28,7 +28,9 @@
                     ${entry.getValue().getFormattedCreatedAt()}
                   </td>
                   <td>
-                    ${entry.getValue().getStatusCode()}
+                    @if(entry.getValue().getStatusCode() != 0)
+                      ${entry.getValue().getStatusCode()}
+                    @endif
                   </td>
                 </tr>
               @endfor
