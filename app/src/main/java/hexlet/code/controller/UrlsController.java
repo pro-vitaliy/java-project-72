@@ -17,7 +17,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
 
 import org.jsoup.Jsoup;
 
@@ -59,14 +58,7 @@ public class UrlsController {
     }
 
     public static void index(Context ctx) throws SQLException {
-        var urls = UrlRepository.getEntities();
-        var urlsInfo = new LinkedHashMap<Url, UrlCheck>();
-        for (var url : urls) {
-            var lastCheck = UrlCheckRepository.findLastCheck(url.getId())
-                    .orElse(new UrlCheck(url.getId()));
-            urlsInfo.put(url, lastCheck);
-        }
-        var page = new UrlsPage(urlsInfo);
+        var page = new UrlsPage(UrlCheckRepository.getUrlsLastInfo());
         page.setFlash(ctx.consumeSessionAttribute("flash"));
         page.setFlashType(ctx.consumeSessionAttribute("flashType"));
         ctx.render("urls/index.jte", model("page", page));

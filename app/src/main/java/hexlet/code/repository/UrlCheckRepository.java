@@ -1,5 +1,6 @@
 package hexlet.code.repository;
 
+import hexlet.code.model.Url;
 import hexlet.code.model.UrlCheck;
 
 import java.sql.SQLException;
@@ -7,8 +8,9 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 public class UrlCheckRepository extends BaseRepository {
     public static void save(UrlCheck check) throws SQLException {
@@ -59,25 +61,39 @@ public class UrlCheckRepository extends BaseRepository {
         }
     }
 
-    public static Optional<UrlCheck> findLastCheck(Long urlId) throws SQLException {
-        var sql = "SELECT * FROM url_checks WHERE url_id = ? ORDER BY created_at DESC LIMIT 1";
-
+    public static Map<Url, UrlCheck> getUrlsLastInfo() throws SQLException {
+        var sql = """
+                SELECT DISTINCT ON (url_id)
+                    urls.id AS url_id,
+                    url_checks.id AS check_id,
+                    url_checks.status_code,
+                    url_checks.title,
+                    url_checks.h1,
+                    url_checks.description,
+                    url_checks.created_at
+                FROM urls
+                LEFT JOIN url_checks ON
+                    urls.id = url_checks.url_id
+                ORDER BY url_id, url_checks.created_at DESC;""";
+        var result = new LinkedHashMap<Url, UrlCheck>();
         try (var connection = dataSource.getConnection();
                 var statement = connection.prepareStatement(sql)) {
-            statement.setLong(1, urlId);
             var resultSet = statement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
+                var urlId = resultSet.getLong("url_id");
+                var url = UrlRepository.find(urlId)
+                        .orElseThrow(() -> new SQLException("Url id exists in url_checks, but not in urls table"));
                 var lastCheck = new UrlCheck(urlId);
-                lastCheck.setId(resultSet.getLong("id"));
+                lastCheck.setId(resultSet.getLong("check_id"));
                 lastCheck.setStatusCode(resultSet.getInt("status_code"));
                 lastCheck.setTitle(resultSet.getString("title"));
                 lastCheck.setH1(resultSet.getString("h1"));
                 lastCheck.setDescription(resultSet.getString("description"));
                 lastCheck.setCreatedAt(resultSet.getTimestamp("created_at"));
-                return Optional.of(lastCheck);
-            } else {
-                return Optional.empty();
+
+                result.put(url, lastCheck);
             }
         }
+        return result;
     }
 }
